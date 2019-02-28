@@ -121,3 +121,89 @@ function calcAgeRetiment(year) {
 const [age2, retirement] = calcAgeRetiment(1990);
 console.log(age2);
 console.log(retirement);
+
+
+//Lecture: Array
+
+
+
+const boxer = document.querySelectorAll('.box');
+
+//Es5
+
+var boxerArr5 = Array.prototype.slice.call(boxer);
+boxerArr5.forEach(function(current){
+  current.style.backgroundColor = 'yellow';
+});
+
+//ES6
+const boxerArr6 =  Array.from(boxer);
+boxerArr6.forEach(current => current.style.backgroundColor= 'green');
+
+
+// for (var i = 0; i < boxer.length; i++) {
+//   if (boxerArr5[i].className === 'box blue') {
+//     continue;
+
+//   }
+//   boxerArr5[i].textContent = 'I changed to blue';
+// }
+
+for(const cur of boxerArr6) {
+  if(cur.className === 'box blue') {
+    continue;
+  }
+  cur.textContent = 'I  Changed to blue!';
+}
+
+//Es5
+
+var ages = [33,45,22,43,83,23];
+
+var full = ages.map(function(cur){
+  return cur >=40;
+});
+
+console.log(full);
+console.log(full.indexOf(true));
+console.log(ages[full.indexOf(true)]);
+
+
+//ES6
+
+console.log(ages.findIndex(cur => cur >= 40));
+console.log(ages.find(cur => cur >= 40));
+
+
+function addFourAges(a,b,c,d) {
+  return a+b+c+d;
+}
+
+sum1 = addFourAges(43,23,53,54);
+console.log(sum1);
+
+
+//ES5
+var ages = [10,43,23,53,54,33];
+var sum2 = addFourAges.apply(null, ages);
+console.log(sum2);
+
+//ES6
+
+const sum3 = addFourAges(...ages);
+console.log(sum3)
+
+
+const familySmith = ['John', 'Jean', 'Mark'];
+const familyMiler = ['Mary', 'Bob', 'Ann'];
+
+const bigFamily = [...familyMiler, 'Lily',...familySmith];
+
+console.log(bigFamily);
+
+const h = document.querySelector('h1');
+const boxers = document.querySelectorAll('.box');
+const all = [h,...boxers];
+console.log(all);
+
+Array.from(all).forEach(cur => cur.style.color = 'purple');
