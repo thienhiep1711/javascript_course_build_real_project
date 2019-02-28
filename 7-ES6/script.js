@@ -207,3 +207,63 @@ const all = [h,...boxers];
 console.log(all);
 
 Array.from(all).forEach(cur => cur.style.color = 'purple');
+
+
+//Lecture Rest parameter
+
+
+//Es5
+function isFullAge5() {
+  // console.log(arguments);
+  var argsArr = Array.prototype.slice.call(arguments);
+
+  argsArr.forEach(function(cur){
+    console.log((2016 - cur) >= 18);
+  })
+}
+
+// isFullAge5(1990,1883,1999);
+
+
+//es6
+function isFullAge6(...years) {
+  years.forEach(cur => console.log( (2016 - cur) >= 18));
+}
+
+// isFullAge6(18,1990,1883,1999);
+
+
+function isFullAge6(limit,...years) {
+  years.forEach(cur => console.log( (2018 - cur) >= limit));
+}
+
+isFullAge6(18,1990,1883,1999);
+
+
+// Lecture Default parameters
+
+//ES5
+
+// function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+//   lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+//   nationality === undefined ? nationality = 'american' : nationality = nationality;
+
+//   this.firstName = firstName;
+//   this.lastName = lastName;
+//   this.yearOfBirth = yearOfBirth;
+//   this.nationality = nationality;
+// }
+
+// var john = new SmithPerson('John', 1944);
+// var emily = new SmithPerson('Emily', 1988, 'Kate', 'korea');
+//Es6
+
+function SmithPerson(firstName, yearOfBirth, lastName = 'Smith', nationality = 'usa') {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.yearOfBirth = yearOfBirth;
+  this.nationality = nationality;
+}
+
+var Kate = new SmithPerson('John', 1944);
+var Dave = new SmithPerson('Emily', 1988, 'Kate', 'korea');
