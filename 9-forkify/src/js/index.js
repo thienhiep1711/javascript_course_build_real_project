@@ -1,14 +1,17 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
+import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likeView from './views/likeView';
 import {
   elements,
   renderLoader,
   clearLoader,
 } from './views/base';
-import List from './models/List';
+
 
 /*
   ** Global state of the app
@@ -97,7 +100,7 @@ const controlRecipe = async () => {
       state.recipe.calcServings();
       // Render recipe
       clearLoader();
-      recipeView.renderRecipe(state.recipe)
+      recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
     } catch (error) {
       console.log(error);
     }
@@ -145,6 +148,41 @@ elements.shopping.addEventListener('click', e => {
   }
 })
 
+
+/*
+LIKE CONTROLLER
+*/ 
+
+state.likes = new Likes();
+const controlLike = () => {
+  if (!state.likes) state.likes = new Likes();
+    const currentID = state.recipe.id;
+
+    // User has Not yet liked current recipe
+  if (!state.likes.isLiked()) {
+
+     // Add like to the state
+    const newLike = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img);
+
+    // Toggle the like button
+    likeView.toggleLikeBtn(true);
+    // Add like to UI list
+    console.log(state.likes);
+
+    // User HAS yet liked current recipe
+  } else {
+    // Remove like from the state
+
+    // Toggle the like button
+    likeView.toggleLikeBtn(false);
+    // Remove like in UI list
+   
+
+  }
+};
+
+
+
 elements.recipe.addEventListener('click', e => {
 
    if (e.target.matches('.btn-decrease, .btn-decrease * ')) {
@@ -158,6 +196,9 @@ elements.recipe.addEventListener('click', e => {
       recipeView.updateServingsIngredients(state.recipe);
    } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add * ')) {
      controlList();
+   } else if (e.target.matches('.recipe__love, .recipe__love *') ) {
+      // Like controller
+      controlLike();
    }
 })
 
