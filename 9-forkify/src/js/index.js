@@ -81,13 +81,17 @@ const controlRecipe = async () => {
 
     //Testing
     // window.r = state.recipe;
+
+    // Highlight selected search item
+    if (state.search) searchView.highlightSelected(id);
+    
     try {
       // Get recipe data and parse ingredient
       await state.recipe.getRecipe();
       state.recipe.parseIngredients();
       //Calculate saving and time
       state.recipe.calcTime();
-      state.recipe.calcSavings();
+      state.recipe.calcServings();
       // Render recipe
       clearLoader();
       recipeView.renderRecipe(state.recipe)
@@ -101,8 +105,17 @@ window.addEventListener('hashchange', controlRecipe);
 window.addEventListener('load', controlRecipe);
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe))
 
-//6bb4b89ce1d6442b2ccd9d4ae3e678c5
-//28e592731909380ad144cc3a33194f46
-//102d4ce9e0c571fee1d297b272f43ae2 
-//https://www.food2fork.com/api/search
-//https://www.food2fork.com/api/get
+//Handle recipe buttons click
+
+elements.recipe.addEventListener('click', e => {
+   if (e.target.matches('.btn-decrease, .btn-decrease * ')) {
+      // Decreease
+      if (state.recipe.servings > 1 ) {
+        state.recipe.updateServings('dec');
+        recipeView.updateServingsIngredients(state.recipe);
+      }
+   } else if (e.target.matches('.btn-increase, .btn-increase * ')) {
+      state.recipe.updateServings('inc');
+      recipeView.updateServingsIngredients(state.recipe);
+   }
+})

@@ -29,8 +29,8 @@ export default class Recipe {
     this.time = periods & 15;
   }
 
-  calcSavings() {
-    this.savings = 4;
+  calcServings() {
+    this.servings = 4;
   }
 
   parseIngredients() {
@@ -87,5 +87,16 @@ export default class Recipe {
       return objIng;
     });
     this.ingredients = newIngredients;
+  }
+  updateServings (type) {
+    //Servings
+    const newServings = type === 'dec' ? this.servings - 1: this.servings + 1;
+
+    // Ingredients
+    this.ingredients.forEach(ing => {
+      ing.count = ing.count * (newServings / this.servings);
+    });
+
+    this.servings = newServings;
   }
 }
