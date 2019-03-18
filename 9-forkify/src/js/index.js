@@ -153,35 +153,52 @@ elements.shopping.addEventListener('click', e => {
 LIKE CONTROLLER
 */ 
 
-state.likes = new Likes();
+
 const controlLike = () => {
   if (!state.likes) state.likes = new Likes();
     const currentID = state.recipe.id;
 
     // User has Not yet liked current recipe
-  if (!state.likes.isLiked()) {
+  if (!state.likes.isLiked(currentID)) {
 
      // Add like to the state
-    const newLike = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img);
+    const newLike = state.likes.addLike(
+      currentID, 
+      state.recipe.title, 
+      state.recipe.author,
+      state.recipe.img);
 
     // Toggle the like button
     likeView.toggleLikeBtn(true);
     // Add like to UI list
-    console.log(state.likes);
+    likeView.renderLike(newLike); 
 
     // User HAS yet liked current recipe
   } else {
     // Remove like from the state
-
+    likeView.deleteLike(currentID);
     // Toggle the like button
     likeView.toggleLikeBtn(false);
     // Remove like in UI list
-   
+    
 
   }
+  likeView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
+// Restore liked recipes on page load
+window.addEventListener('load', () => {
+  state.likes = new Likes();
 
+  // Resote likes
+  state.likes.readStorage();
+
+  //Toggle likes menu button
+  likeView.toggleLikeMenu(state.likes.getNumLikes());
+
+  // Render the existing likes
+  state.likes.likes.forEach(like => likeView.renderLike(like))
+})
 
 elements.recipe.addEventListener('click', e => {
 
@@ -201,6 +218,3 @@ elements.recipe.addEventListener('click', e => {
       controlLike();
    }
 })
-
-
-window.l = new List();
