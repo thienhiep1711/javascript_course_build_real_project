@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --open"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.4",
     "fractional": "^1.0.0",
+    "hbs": "^4.0.3",
     "uniqid": "^5.0.3"
   }
 }
