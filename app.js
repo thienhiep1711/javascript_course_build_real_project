@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
 
 
 
@@ -21,9 +20,6 @@ app.use((req, res, next) => {
 })
 
 app.use(express.static(__dirname + '/dist'));
-app.get('/', (req, res) => {
-  res.render('index.html');
-});
 
 
 app.listen(port, () => {
